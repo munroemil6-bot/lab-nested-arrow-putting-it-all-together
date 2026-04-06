@@ -39,6 +39,14 @@ const loginSystem = (maxAttempts) => {
     };
 };
 
+// create system
+const login = loginSystem(3);
+
+// test
+login("admin", "wrong");
+login("admin", "wrong");
+login("admin", "wrong");
+login("admin", "1234");
 
 
 module.exports = {
