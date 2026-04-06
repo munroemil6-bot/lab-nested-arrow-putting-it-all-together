@@ -15,6 +15,30 @@ const loginSystem = (maxAttempts) => {
             return;
         }
 
+        // Nested function
+        const processLogin = () => {
+            if (validateUser(username, password)) {
+                console.log("Login successful!");
+                attempts = 0;
+            } else {
+                attempts++;
+
+                if (attempts >= maxAttempts) {
+                    isLocked = true;
+                    console.log("Too many failed attempts. Account locked.");
+                } else {
+                    console.log(
+                        "Incorrect credentials. Attempts left: " +
+                        (maxAttempts - attempts)
+                    );
+                }
+            }
+        };
+
+        processLogin();
+    };
+};
+
 
 
 module.exports = {
