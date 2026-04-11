@@ -4,25 +4,25 @@ function createLoginTracker(userInfo) {
 
   return (passwordAttempt) => {
 
+    // Allow correct login immediately (even after failed attempts)
+    if (passwordAttempt === userInfo.password) {
+      return "Login successful";
+    }
+
+    // Increment only when login fails
     attemptCount++;
 
-    console.log("Attempt Count:", attemptCount);
-    console.log("Password Attempt:", passwordAttempt);
-
+    // Lock account after 3 failed attempts
     if (attemptCount > 3) {
       return "Account locked due to too many failed login attempts";
     }
 
-    if (passwordAttempt === userInfo.password) {
-      return "Login successful";
-    } else {
-      return `Login attempt ${attemptCount}: Login failed`;
-    }
+    return `Login attempt ${attemptCount}: Login failed`;
   };
 }
 
-
 //test
+
 const user = {
   username: "user1",
   password: "password123"
@@ -30,14 +30,11 @@ const user = {
 
 const login = createLoginTracker(user);
 
-// Failed attempts
-console.log(login("wrong"));
-console.log(login("1234"));
-console.log(login("hello"));
-
-// Account locked
-console.log(login("password123"));
-console.log(login("password123"));
+console.log(login("wrong"));        // Failed 1
+console.log(login("wrong"));        // Failed 2
+console.log(login("password123"));  // Success after failed attempts
+console.log(login("wrong"));        // Failed 3
+console.log(login("wrong"));        // Account locked
 
 
 
